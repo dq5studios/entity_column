@@ -18,16 +18,20 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.17",
+        "phpunit/phpunit": "^9.0",
         "vimeo/psalm": "^5.12"
     },
     "autoload": {
         "psr-4": {
             "DQ5Studios\\EntityColumn\\": "src"
-        }
+        },
+        "files": [
+            "src/EntityColumn.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
-            "DQ5Studios\\EntityColumn\\Tests\\": "test"
+            "DQ5Studios\\EntityColumn\\Tests\\": "tests"
         }
     },
     "scripts": {

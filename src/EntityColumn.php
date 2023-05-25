@@ -10,39 +10,56 @@ use Symfony\Component\PropertyAccess\Exception\NoSuchIndexException;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 use Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
-/**
- * A version of array_column that can handle objects with getters.
- *
- * @param array       $array      Input
- * @param string      $column_key Property to use as the value
- * @param string|null $index_key  Property to use as the key
- *
- * @return array Key-value array
- *
- * @throws NoSuchPropertyException
- * @throws UnexpectedTypeException
- * @throws NoSuchIndexException
- * @throws AccessException
- * @throws InvalidArgumentException
- */
-function entity_column(
-    array $array,
-    string $column_key,
-    string $index_key = null
-): array {
-    $output = [];
-    $accessor = PropertyAccess::createPropertyAccessor();
+use function function_exists;
+use function is_array;
 
-    foreach ($array as $row) {
-        $value = $accessor->getValue($row, $column_key);
-        if (null !== $index_key) {
-            $key = $accessor->getValue($row, $index_key);
-            $output[$key] = $value;
-        } else {
-            $output[] = $value;
+if (!function_exists("DQ5Studios\EntityColumn\entity_column")) {
+    /**
+     * A version of array_column that can handle objects with getters.
+     *
+     * @param array<array-key,array|object> $array      Input
+     * @param string                        $column_key Property to use as the value
+     * @param string|null                   $index_key  Property to use as the key
+     *
+     * @return array Key-value array
+     *
+     * @throws NoSuchPropertyException
+     * @throws UnexpectedTypeException
+     * @throws NoSuchIndexException
+     * @throws AccessException
+     * @throws InvalidArgumentException
+     */
+    function entity_column(
+        array $array,
+        string $column_key,
+        string $index_key = null
+    ): array {
+        $output = [];
+        static $accessor = null;
+        /** @var PropertyAccessor */
+        $accessor ??= PropertyAccess::createPropertyAccessor();
+
+        foreach ($array as $row) {
+            if (is_array($row)) {
+                $value = $accessor->getValue($row, "[{$column_key}]");
+            } else {
+                $value = $accessor->getValue($row, $column_key);
+            }
+
+            if (null !== $index_key) {
+                if (is_array($row)) {
+                    $key = $accessor->getValue($row, "[{$index_key}]");
+                } else {
+                    $key = $accessor->getValue($row, $index_key);
+                }
+                $output[$key] = $value;
+            } else {
+                $output[] = $value;
+            }
         }
-    }
 
-    return $output;
+        return $output;
+    }
 }

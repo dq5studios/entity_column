@@ -1,1 +1,3 @@
-/.php-cs-fixer.cache
+/*.cache
+vendor/
+!vendor/.gitkeep
