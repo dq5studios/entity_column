@@ -50,9 +50,13 @@ class EntityColumnTest extends TestCase
     public function testObjectWithGetters(): void
     {
         $expected = [1 => "AAA", 2 => "BBB", 3 => "CCC"];
-        $class = new class(0, "ZZZ") {
-            public function __construct(private int $key, private string $value)
+        $class = new class {
+            private ?int $key;
+            private ?string $value;
+            public function __construct(int $key = null, string $value = null)
             {
+                $this->key = $key;
+                $this->value = $value;
             }
 
             public function getKey(): int
