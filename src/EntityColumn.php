@@ -20,8 +20,8 @@ if (!function_exists("DQ5Studios\EntityColumn\entity_column")) {
      * A version of array_column that can handle objects with getters.
      *
      * @param array<array-key,array|object> $array      Input
-     * @param string                        $column_key Property to use as the value
-     * @param string|null                   $index_key  Property to use as the key
+     * @param int|string                    $column_key Property to use as the value
+     * @param int|string|null               $index_key  Property to use as the key
      *
      * @return array Key-value array
      *
@@ -34,8 +34,8 @@ if (!function_exists("DQ5Studios\EntityColumn\entity_column")) {
      */
     function entity_column(
         array $array,
-        string $column_key,
-        string $index_key = null
+        $column_key,
+        $index_key = null
     ): array {
         $output = [];
         static $accessor = null;
@@ -48,14 +48,14 @@ if (!function_exists("DQ5Studios\EntityColumn\entity_column")) {
             if (is_array($row)) {
                 $value = $accessor->getValue($row, "[{$column_key}]");
             } else {
-                $value = $accessor->getValue($row, $column_key);
+                $value = $accessor->getValue($row, "{$column_key}");
             }
 
             if (null !== $index_key) {
                 if (is_array($row)) {
                     $key = $accessor->getValue($row, "[{$index_key}]");
                 } else {
-                    $key = $accessor->getValue($row, $index_key);
+                    $key = $accessor->getValue($row, "{$index_key}");
                 }
                 $output[$key] = $value;
             } else {

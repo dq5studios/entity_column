@@ -17,9 +17,9 @@ class EntityColumnTest extends TestCase
     public function testCompareArrayWithArrayColumn(): void
     {
         $array = [
-            ["key" => 1, "value" => "Skimbleshanks"],
-            ["key" => 2, "value" => "Mungojerrie"],
-            ["key" => 3, "value" => "Rumpelteazer"],
+            ["key" => 5, "value" => "Skimbleshanks"],
+            ["key" => 7, "value" => "Mungojerrie"],
+            ["key" => 9, "value" => "Rumpelteazer"],
         ];
 
         $expected = array_column($array, "value", "key");
@@ -31,9 +31,9 @@ class EntityColumnTest extends TestCase
     public function testCompareArrayListWithArrayColumn(): void
     {
         $array = [
-            ["key" => 1, "value" => "Skimbleshanks"],
-            ["key" => 2, "value" => "Mungojerrie"],
-            ["key" => 3, "value" => "Rumpelteazer"],
+            ["key" => 5, "value" => "Skimbleshanks"],
+            ["key" => 7, "value" => "Mungojerrie"],
+            ["key" => 9, "value" => "Rumpelteazer"],
         ];
 
         $expected = array_column($array, "value");
@@ -45,13 +45,13 @@ class EntityColumnTest extends TestCase
     public function testCompareObjectWithArrayColumn(): void
     {
         $Skimbleshanks = new stdClass();
-        $Skimbleshanks->key = 1;
+        $Skimbleshanks->key = 5;
         $Skimbleshanks->value = "Skimbleshanks";
         $Mungojerrie = new stdClass();
-        $Mungojerrie->key = 2;
+        $Mungojerrie->key = 7;
         $Mungojerrie->value = "Mungojerrie";
         $Rumpelteazer = new stdClass();
-        $Rumpelteazer->key = 3;
+        $Rumpelteazer->key = 9;
         $Rumpelteazer->value = "Mungojerrie";
         $array = [$Skimbleshanks, $Mungojerrie, $Rumpelteazer];
 
@@ -64,13 +64,13 @@ class EntityColumnTest extends TestCase
     public function testCompareObjectListWithArrayColumn(): void
     {
         $Skimbleshanks = new stdClass();
-        $Skimbleshanks->key = 1;
+        $Skimbleshanks->key = 5;
         $Skimbleshanks->value = "Skimbleshanks";
         $Mungojerrie = new stdClass();
-        $Mungojerrie->key = 2;
+        $Mungojerrie->key = 7;
         $Mungojerrie->value = "Mungojerrie";
         $Rumpelteazer = new stdClass();
-        $Rumpelteazer->key = 3;
+        $Rumpelteazer->key = 9;
         $Rumpelteazer->value = "Mungojerrie";
         $array = [$Skimbleshanks, $Mungojerrie, $Rumpelteazer];
 
@@ -82,7 +82,7 @@ class EntityColumnTest extends TestCase
 
     public function testObjectWithGetters(): void
     {
-        $expected = [1 => "Skimbleshanks", 2 => "Mungojerrie", 3 => "Rumpelteazer"];
+        $expected = [5 => "Skimbleshanks", 7 => "Mungojerrie", 9 => "Rumpelteazer"];
         $class = new class() {
             private ?int $key;
             private ?string $value;
@@ -103,7 +103,7 @@ class EntityColumnTest extends TestCase
                 return $this->value;
             }
         };
-        $array = [new $class(1, "Skimbleshanks"), new $class(2, "Mungojerrie"), new $class(3, "Rumpelteazer")];
+        $array = [new $class(5, "Skimbleshanks"), new $class(7, "Mungojerrie"), new $class(9, "Rumpelteazer")];
 
         $actual = entity_column($array, "value", "key");
 
@@ -133,7 +133,7 @@ class EntityColumnTest extends TestCase
                 return $this->value;
             }
         };
-        $array = [new $class(1, "Skimbleshanks"), new $class(2, "Mungojerrie"), new $class(3, "Rumpelteazer")];
+        $array = [new $class(5, "Skimbleshanks"), new $class(7, "Mungojerrie"), new $class(9, "Rumpelteazer")];
 
         $actual = entity_column($array, "value");
 
