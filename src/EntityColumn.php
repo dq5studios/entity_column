@@ -30,6 +30,7 @@ if (!function_exists("DQ5Studios\EntityColumn\entity_column")) {
      * @throws NoSuchIndexException
      * @throws AccessException
      * @throws InvalidArgumentException
+     * @throws NoSuchIndexException
      */
     function entity_column(
         array $array,
@@ -39,7 +40,9 @@ if (!function_exists("DQ5Studios\EntityColumn\entity_column")) {
         $output = [];
         static $accessor = null;
         /** @var PropertyAccessor */
-        $accessor ??= PropertyAccess::createPropertyAccessor();
+        $accessor ??= PropertyAccess::createPropertyAccessorBuilder()
+            ->enableExceptionOnInvalidIndex()
+            ->getPropertyAccessor();
 
         foreach ($array as $row) {
             if (is_array($row)) {

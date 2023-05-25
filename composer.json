@@ -1,6 +1,6 @@
 {
     "name": "dq5studios/entity_column",
-    "description": "",
+    "description": "A drop-in replacement for `array_column()` that supports objects with getters.",
     "type": "library",
     "license": "BSD-3-Clause",
     "authors": [
