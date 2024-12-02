@@ -83,11 +83,11 @@ class EntityColumnTest extends TestCase
     public function testObjectWithGetters(): void
     {
         $expected = [5 => "Skimbleshanks", 7 => "Mungojerrie", 9 => "Rumpelteazer"];
-        $class = new class() {
+        $class = new class {
             private ?int $key;
             private ?string $value;
 
-            public function __construct(int $key = null, string $value = null)
+            public function __construct(?int $key = null, ?string $value = null)
             {
                 $this->key = $key;
                 $this->value = $value;
@@ -113,11 +113,11 @@ class EntityColumnTest extends TestCase
     public function testObjectListWithGetters(): void
     {
         $expected = ["Skimbleshanks", "Mungojerrie", "Rumpelteazer"];
-        $class = new class() {
+        $class = new class {
             private ?int $key;
             private ?string $value;
 
-            public function __construct(int $key = null, string $value = null)
+            public function __construct(?int $key = null, ?string $value = null)
             {
                 $this->key = $key;
                 $this->value = $value;

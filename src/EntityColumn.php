@@ -35,7 +35,7 @@ if (!function_exists("DQ5Studios\EntityColumn\entity_column")) {
     function entity_column(
         array $array,
         $column_key,
-        $index_key = null
+        $index_key = null,
     ): array {
         $output = [];
         static $accessor = null;
